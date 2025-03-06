@@ -1,9 +1,10 @@
 # Project: Block Chain
 
-Authors: (_TODO: fill in names here!_)
+Authors: Finn Rowles
 
 ## Resources
 
-*   (_TODO: fill in resources here!_)
-*   ...
-*   ...
+*   Java Version 17.0.13
+*   Professor Osera's Textbook and Lab Instructions
+*   Java utils library: specifically, arrays and Bytes.
+*   

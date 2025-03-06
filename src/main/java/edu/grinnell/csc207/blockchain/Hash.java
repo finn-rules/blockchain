@@ -1,6 +1,5 @@
 package edu.grinnell.csc207.blockchain;
 import java.lang.Byte;
-import java.util.Formatter;
 import java.util.*;
 
 /**
@@ -8,8 +7,9 @@ import java.util.*;
  */
 public class Hash {
     private byte[] hashData;
+
     public Hash(byte[] data) {
-        hashData = data;
+        this.hashData = data;
     }
 
     public byte[] getData() {
@@ -34,16 +34,17 @@ public class Hash {
      * toString: returns a string from the hash array using format library utils
      * String: returns a string of form hexadecimal digits, 2 digits per byte
      */
+    @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
-        for (int i = 0; i < hashData.length; i++) {
+        for (int i = 0; i < this.hashData.length; i++) {
             s.append(String.format("%02x", hashData[i]));
         }
         return s.toString(); 
     }
 
     public boolean equals(Object other) {
-        if(other instanceof Hash) {
+        if (other instanceof Hash) {
             Hash o = (Hash) other;
             return Arrays.equals(o.getData(), this.getData());
         }

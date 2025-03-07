@@ -20,6 +20,13 @@ public class Hash {
      * @return boolean: whether the has is valid or not
      */
     public boolean isValid() {
+        return hashData[0] == 0 && 
+               hashData[1] == 0 &&
+               hashData[2] == 0;
+        /*
+        if (this.hashData == null) {
+            return false;
+        }
         if (hashData.length >= 3) {
             for (int i = 0; i < 3; i++) {
                if (Byte.toUnsignedInt(hashData[i]) != 0) {
@@ -29,7 +36,9 @@ public class Hash {
             return true;
         }
         return false;
+        */
     }
+    
     /**
      * toString: returns a string from the hash array using format library utils
      * String: returns a string of form hexadecimal digits, 2 digits per byte

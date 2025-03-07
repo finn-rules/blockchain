@@ -74,7 +74,6 @@ public class BlockChainDriver {
                 }
                 }
             }
-            s.close();
         }  
     }
 }

@@ -50,7 +50,7 @@ public class Block {
 
     public Hash calculateHash() throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("sha-256");
-        ByteBuffer b = ByteBuffer.allocate(64).putInt(this.currentNum).putInt(this.transferred).putLong(this.Nonce);
+        ByteBuffer b = ByteBuffer.allocate(64).putInt(this.currentNum).putInt(this.transferred).putLong(this.nonce);
 
         if (this.previousHash != null) {
             b.put(this.previousHash.getData());
@@ -81,5 +81,22 @@ public class Block {
 
     public Hash getPrevHash() {
         return this.previousHash;
+    }
+
+    @Override
+    public String toString() {
+        String s = "";
+        s = s + "Block " + 
+        this.currentNum + 
+        " (Amount: < " + 
+        this.transferred +
+        " > , Nonce: < " +
+        this.nonce +
+        " >, prevHash: < " +
+        this.previousHash +
+        " >, hash: < " +
+        this.currentHash +
+        " >";
+        return s;
     }
 }

@@ -27,22 +27,16 @@ public class Block {
         this.currentNum = num;
         this.transferred = amount;
         this.previousHash = prevHash;
-        this.currentHash = calculateHash();
         this.nonce = nonce;
+        this.currentHash = calculateHash();
     }
 
     public long miner() throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("sha-256");
         long calculatedNonce = 0;
-        while (!this.currentHash.isValid()) {
-            ByteBuffer b = ByteBuffer.allocate(64).putInt(this.currentNum).putInt(this.transferred).putLong(calculatedNonce);
-
-            if (this.previousHash != null) {
-                b.put(this.previousHash.getData());
-            }
-
-            md.update(b.array());
-            this.currentHash = new Hash(md.digest());
+        Hash newHash = calculateNoncelessHash(calculatedNonce);
+        while (!newHash.isValid()) {
+            newHash = calculateNoncelessHash(++calculatedNonce);
             calculatedNonce++;
         }
         return calculatedNonce;
@@ -51,6 +45,20 @@ public class Block {
     public Hash calculateHash() throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("sha-256");
         ByteBuffer b = ByteBuffer.allocate(64).putInt(this.currentNum).putInt(this.transferred).putLong(this.nonce);
+
+        if (this.previousHash != null) {
+            b.put(this.previousHash.getData());
+        }
+
+        md.update(b.array());
+        byte[] hash = md.digest();
+        Hash calculated = new Hash(hash);
+        return calculated;
+    }
+    
+    public Hash calculateNoncelessHash(long testNonce) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("sha-256");
+        ByteBuffer b = ByteBuffer.allocate(64).putInt(this.currentNum).putInt(this.transferred).putLong(testNonce);
 
         if (this.previousHash != null) {
             b.put(this.previousHash.getData());
